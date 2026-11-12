@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Print USA - Demo Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0056A3;
+            --secondary: #FF6B35;
+            --accent: #28A745;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: var(--dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        header { position: fixed; top: 0; width: 100%; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; padding: 15px 0; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 1.8rem; color: var(--primary); }
+        .logo span { color: var(--secondary); }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { color: var(--dark); text-decoration: none; font-weight: 500; }
+        .header-actions { display: flex; gap: 20px; align-items: center; }
+        .phone { color: var(--primary); font-weight: 600; }
+        
+        .btn { padding: 12px 30px; border-radius: 5px; font-weight: 600; cursor: pointer; border: none; text-decoration: none; display: inline-block; transition: all 0.3s; }
+        .btn-primary { background: var(--secondary); color: white; }
+        .btn-primary:hover { background: #E55A2B; transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-large { padding: 15px 40px; font-size: 1.1rem; }
+        
+        .hero { background: linear-gradient(135deg, var(--primary), #004080); color: white; padding: 120px 0 80px; min-height: 90vh; display: flex; align-items: center; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 1.5rem; margin-bottom: 30px; opacity: 0.9; }
+        .badges { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .badge { background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; }
+        .hero p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
+        .hero-cta { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .trust { display: flex; gap: 30px; }
+        .trust-item { display: flex; align-items: center; gap: 10px; }
+        .trust i { color: var(--secondary); }
+        
+        section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 15px; }
+        .section-subtitle { text-align: center; margin-bottom: 50px; color: #7F8C8D; }
+        
+        .pain-points { background: var(--light); }
+        .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .pain-item { background: white; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .pain-item i { font-size: 2.5rem; color: var(--secondary); margin-bottom: 15px; }
+        .solution { background: var(--primary); color: white; padding: 30px; border-radius: 10px; text-align: center; }
+        
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { background: white; padding: 40px 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s; position: relative; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
+        .service-card.featured { border: 2px solid var(--secondary); }
+        .featured-badge { position: absolute; top: -12px; right: 20px; background: var(--secondary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; }
+        .service-icon { width: 70px; height: 70px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px; }
+        .service-cta { color: var(--primary); font-weight: 600; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+        
+        .why-us { background: var(--light); }
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .why-item { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .why-icon { width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 20px; }
+        
+        .industries-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .industry-card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid var(--primary); }
+        .industry-icon { width: 60px; height: 60px; background: var(--light); color: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 20px; }
+        
+        .lead-form-section { background: linear-gradient(135deg, var(--primary), #004080); color: white; }
+        .form-container { max-width: 800px; margin: 0 auto; background: white; padding: 50px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); }
+        .form-header { text-align: center; margin-bottom: 40px; }
+        .form-header h2 { color: var(--dark); }
+        .urgency { display: inline-flex; align-items: center; gap: 10px; background: #FFF3CD; color: #856404; padding: 10px 20px; border-radius: 25px; margin-top: 15px; font-weight: 600; }
+        .form-group { margin-bottom: 25px; color: var(--dark); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; }
+        input, select { width: 100%; padding: 12px 15px; border: 2px solid #E0E0E0; border-radius: 5px; font-size: 1rem; }
+        .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+        .checkbox-label { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; }
+        .privacy { text-align: center; margin-top: 20px; font-size: 0.9rem; color: #7F8C8D; }
+        
+        .steps { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .step { flex: 1; min-width: 250px; text-align: center; position: relative; }
+        .step-number { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; background: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+        .step-icon { width: 80px; height: 80px; background: white; border: 3px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary); margin: 0 auto 20px; }
+        
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px; }
+        .testimonial { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .stars { color: #FFC107; margin-bottom: 15px; }
+        .testimonial-text { font-style: italic; margin-bottom: 20px; line-height: 1.8; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+        .author-avatar { font-size: 3rem; color: var(--primary); }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+        .stat-item { padding: 30px; background: var(--light); border-radius: 10px; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary); }
+        
+        .faq { background: var(--light); }
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: white; margin-bottom: 15px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .faq-question { width: 100%; padding: 20px 25px; background: none; border: none; text-align: left; font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; }
+        .faq-answer { padding: 0 25px 20px; display: none; }
+        .faq-item.active .faq-answer { display: block; }
+        
+        .final-cta { background: linear-gradient(135deg, var(--secondary), #E55A2B); color: white; text-align: center; }
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0; }
+        .cta-buttons .btn-secondary { border-color: white; color: white; }
+        
+        footer { background: var(--dark); color: white; padding: 60px 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        footer h3 { color: white; margin-bottom: 20px; }
+        footer h3 span { color: var(--secondary); }
+        footer h4 { color: white; margin-bottom: 20px; }
+        footer ul { list-style: none; }
+        footer li { margin-bottom: 10px; }
+        footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        .social { display: flex; gap: 15px; margin-top: 20px; }
+        .social a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        
+        .popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 3000; justify-content: center; align-items: center; }
+        .popup.active { display: flex; }
+        .popup-content { background: white; padding: 40px; border-radius: 15px; max-width: 500px; width: 90%; position: relative; }
+        .popup-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        
+        .chat-widget { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.15); z-index: 2500; }
+        .chat-window { display: none; position: fixed; bottom: 100px; right: 30px; width: 350px; background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); z-index: 2500; }
+        .chat-window.active { display: block; }
+        .chat-header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; }
+        .chat-header button { background: none; border: none; color: white; cursor: pointer; }
+        .chat-body { padding: 20px; }
+        .chat-options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .chat-options button { padding: 10px; background: white; border: 2px solid var(--primary); border-radius: 20px; color: var(--primary); cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .badges { flex-direction: column; }
+            .hero-cta { flex-direction: column; }
+            .trust { flex-direction: column; gap: 15px; }
+            .form-row { grid-template-columns: 1fr; }
+            .steps { flex-direction: column; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .chat-window { width: 90%; right: 5%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1><i class="fas fa-print"></i> TotalPrint<span>USA</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#why-us">Why Us</a></li>
+                        <li><a href="#industries">Industries</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="tel:8556251904" class="phone"><i class="fas fa-phone"></i> (855) 625-1904</a>
+                    <a href="#quote" class="btn btn-primary">Get Free Quote</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Nationwide Printer & Copier Repair</h1>
+            <p class="hero-subtitle">Fast Response Across All 50 States</p>
+            <div class="badges">
+                <span class="badge"><i class="fas fa-map-marker-alt"></i> 62 Service Hubs</span>
+                <span class="badge"><i class="fas fa-certificate"></i> Factory-Trained Technicians</span>
+                <span class="badge"><i class="fas fa-clock"></i> Same-Day Service</span>
+            </div>
+            <p>From emergency repairs to complete print fleet management, we keep your business running smoothly with expert support and proactive maintenance.</p>
+            <div class="hero-cta">
+                <a href="#quote" class="btn btn-primary btn-large">Get Free Quote</a>
+                <a href="tel:8556251904" class="btn btn-secondary btn-large"><i class="fas fa-phone"></i> Call Now</a>
+            </div>
+            <div class="trust">
+                <div class="trust-item"><i class="fas fa-shield-alt"></i><span>HP Certified Partner</span></div>
+                <div class="trust-item"><i class="fas fa-star"></i><span>4.9/5 Rating</span></div>
+                <div class="trust-item"><i class="fas fa-check-circle"></i><span>Serving 85% of USA</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pain-points">
+        <div class="container">
+            <h2 class="section-title">Tired of Printer Downtime Costing Your Business?</h2>
+            <div class="pain-grid">
+                <div class="pain-item">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Unplanned printer failures disrupting workflows</p>
+                </div>
+                <div class="pain-item">
+                    <i class="fas fa-dollar-sign"></i>
+                    <p>Rising toner and supply costs</p>
+                </div>
+                <div class="pain-item">
+                    <i class="fas fa-users"></i>
+                    <p>Multiple vendors making support complicated</p>
+                </div>
+                <div class="pain-item">
+                    <i class="fas fa-lock"></i>
+                    <p>Security vulnerabilities in outdated equipment</p>
+                </div>
+            </div>
+            <div class="solution">
+                <h3>We fix it fast, manage it better, and save you money.</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comprehensive print solutions for businesses of all sizes</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-wrench"></i></div>
+                    <h3>Emergency Copier Repair</h3>
+                    <p>Same-day repair service across all 50 states with factory-trained technicians.</p>
+                    <a href="#quote" class="service-cta">Request Repair <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Managed Print Services</h3>
+                    <p>Centralized monitoring, automated supplies, reduce costs by up to 30%.</p>
+                    <a href="#quote" class="service-cta">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Printer Fleet Optimization</h3>
+                    <p>Strategic placement and right-sizing to maximize efficiency.</p>
+                    <a href="#quote" class="service-cta">Get Assessment <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h3>Lease Buyout & Equipment</h3>
+                    <p>Upgrade your fleet without breaking the budget.</p>
+                    <a href="#quote" class="service-cta">Explore Options <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="why-us">
+        <div class="container">
+            <h2 class="section-title">Why Choose Total Print USA?</h2>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h3>62 Service Hubs Nationwide</h3>
+                    <p>Local technicians ensuring fast response times wherever you are.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Factory-Trained Experts</h3>
+                    <p>HP certified technicians trained on all major printer brands.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-stopwatch"></i></div>
+                    <h3>4-Hour Average Response</h3>
+                    <p>Quick turnaround to minimize downtime.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-globe-americas"></i></div>
+                    <h3>Rural & Urban Coverage</h3>
+                    <p>We serve both metropolitan and rural regions across all 50 states.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-building"></i></div>
+                    <h3>Single Vendor Solution</h3>
+                    <p>One company supporting all your locations.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Proactive Monitoring</h3>
+                    <p>Prevent issues before they occur with 24/7 monitoring.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="industries">
+        <div class="container">
+            <h2 class="section-title">Specialized Solutions By Industry</h2>
+            <p class="section-subtitle">Tailored print management for your specific needs</p>
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-hospital"></i></div>
+                    <h3>Healthcare</h3>
+                    <p>HIPAA-compliant printing with secure document handling.</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Education</h3>
+                    <p>High-volume campus printing with cost-effective solutions.</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-hard-hat"></i></div>
+                    <h3>Construction</h3>
+                    <p>Job site document management with mobile printing.</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-store"></i></div>
+                    <h3>Retail</h3>
+                    <p>Multi-location support with centralized management.</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-balance-scale"></i></div>
+                    <h3>Legal</h3>
+                    <p>Secure document handling with audit trails.</p>
+                </div>
+                <div class="industry-card">
+                    <div class="industry-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3>Finance</h3>
+                    <p>Enterprise-grade security with encryption.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quote" class="lead-form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Get Your Free Print Audit Today</h2>
+                    <p style="color: #7F8C8D;">Discover how much you can save on printing costs</p>
+                    <div class="urgency"><i class="fas fa-fire"></i> Only 5 free audit spots left this week!</div>
+                </div>
+                <form onsubmit="event.preventDefault(); alert('Thank you! We will contact you within 2 hours.'); this.reset();">
+                    <div class="form-group">
+                        <label>Company Name *</label>
+                        <input type="text" required placeholder="Your Company Name">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Contact Name *</label>
+                            <input type="text" required placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" required placeholder="you@company.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="tel" required placeholder="(555) 123-4567">
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Printers</label>
+                            <select>
+                                <option>Select...</option>
+                                <option>1-5 devices</option>
+                                <option>6-20 devices</option>
+                                <option>21-50 devices</option>
+                                <option>50+ devices</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Pain Points</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox"> Frequent breakdowns</label>
+                            <label class="checkbox-label"><input type="checkbox"> High costs</label>
+                            <label class="checkbox-label"><input type="checkbox"> Slow service</label>
+                            <label class="checkbox-label"><input type="checkbox"> Security concerns</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large btn-full"><i class="fas fa-paper-plane"></i> Claim My Free Audit</button>
+                    <p class="privacy"><i class="fas fa-lock"></i> Your information is secure. No spam, ever.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-us">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Simple process, exceptional results</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <h3>Request Assessment</h3>
+                    <p>Fill out our quick form or call us</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-search"></i></div>
+                    <h3>Expert Analysis</h3>
+                    <p>We analyze your print environment</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-check-double"></i></div>
+                    <h3>Custom Solution</h3>
+                    <p>Receive recommendations in 24 hours</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="testimonial
